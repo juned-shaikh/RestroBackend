@@ -33,6 +33,13 @@ app.use('/api/owners', ownerRoutes);
 app.use('/api/restaurants', restaurantRoutes);
 app.use('/api/slots', slotRoutes);
 
+// ✅ Serve Angular frontend **after** all API routes
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 module.exports = {
   app,
   setSocketIO: (io) => { ioInstance = io; }
